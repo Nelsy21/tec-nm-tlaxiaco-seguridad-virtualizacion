@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punto de Venta</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    display: flex;
+    max-width: 1300px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .menu {
+    width: 220px; /* Aumentado para mejor ajuste de iconos y texto */
+    background-color: #007bff; /* Azul */
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+    height: 80vh; /* Ajustado para altura uniforme */
+    overflow-y: auto; /* Desplazamiento en caso de contenido largo */
+  }
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .menu-item {
+    margin-bottom: 10px;
+  }
+  .menu-item a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  .menu-item a:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+  }
+  .menu-item img {
+    width: 30px; /* Tamaño ajustado para los íconos */
+    height: auto;
+    margin-right: 10px;
+  }
+  .submenu {
+    display: none;
+    padding-left: 20px;
+    background-color: #0056b3;
+    border-radius: 5px;
+  }
+  .menu-item:hover .submenu {
+    display: block;
+  }
+  .submenu a {
+    color: #fff;
+  }
+  .submenu-sub {
+    display: none;
+    position: absolute;
+    left: 100%; /* Coloca el submenú a la derecha del menú de "Reportes de Ventas" */
+    top: 0;
+    background-color: #97bde6;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    padding: 5px 0; /* Espaciado vertical para el submenú */
+  }
+  .menu-item-sub:hover .submenu-sub {
+    display: block;
+  }
+  .content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 0 10px 10px 0;
+  }
+  h1 {
+    margin-top: 0;
+  }
+  .error-message {
+    color: red;
+    text-align: center;
+  }
+  /* Estilos para el botón de cerrar sesión */
+  .logout-button {
+    display: block;
+    padding: 10px;
+    background-color: #dc3545;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+  }
+  .logout-button:hover {
+    background-color: #c82333;
+  }
+</style>
+<script>
+  window.onload = function() {
+    history.pushState(null, null, window.location.href);  
+    window.onpopstate = function() {
+      history.go(1);
+    };
+  };
+</script>
+</head>
+<body>
+
+<div class="container">
+  <div class="menu">
+    <ul>
+      <li class="menu-item">
+        <a href="#" style="display: flex; align-items: center;">
+          <img src="imagen/inicio.png" alt="Inicio">Inicio
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#">Administrador</a>
+        <ul class="submenu">
+          <li><a href="Usuarios.html">Usuarios</a></li>
+          <li><a href="product.php">Productos</a></li>
+          <li class="menu-item-sub">
+            <a href="#">Reportes de Ventas</a>
+            <ul class="submenu-sub">
+              <li><a href="reporteporturno.html">Por Turno</a></li>
+              <li><a href="reporte_ventas.html">Por Venta</a></li>
+              <li><a href="reporte_cajero.html">Por Cajero</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <a href="Principal1.html" class="logout-button">Cerrar Sesión</a>
+  </div>
+  <div class="content">
+    <h1>PUNTO DE VENTA ABARROTES (SOL)</h1>
+    <p>Aquí va tu contenido principal...</p>
+  </div>
+</div>
+
+</body>
+</html>

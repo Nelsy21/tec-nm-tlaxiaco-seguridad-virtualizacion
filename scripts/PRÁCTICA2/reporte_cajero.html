@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Ventas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>REPORTE DE VENTAS</h1>
+        <form>
+            <label for="fecha">Selecciona una fecha:</label>
+            <input type="date" id="fecha" name="fecha">
+            <button type="submit">Generar Reporte</button>
+        </form>
+        <table id="tablaReporte">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se insertarán las filas con datos generados por JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const fecha = document.getElementById('fecha').value;
+            fetchReporte(fecha);
+        });
+
+        function fetchReporte(fecha) {
+            fetch('obtener_reporte.php?fecha=' + fecha)
+            .then(response => response.json())
+            .then(data => {
+                const tablaBody = document.querySelector('#tablaReporte tbody');
+                tablaBody.innerHTML = '';
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row.id}</td>
+                        <td>${row.fecha}</td>
+                        <td>${row.producto}</td>
+                        <td>${row.cantidad}</td>
+                        <td>${row.precio}</td>
+                    `;
+                    tablaBody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error('Error al obtener el reporte:', error));
+        }
+    </script>
+</body>
+</html>

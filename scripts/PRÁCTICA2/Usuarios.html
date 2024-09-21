@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuarios</title>
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* Para alinear los botones */
+        }
+        input[type="submit"], input[type="button"] {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 50px; /* Botones redondeados */
+            flex: 1; /* Para que ambos botones tengan el mismo ancho */
+            margin-right: 10px; /* Espacio entre los botones */
+        }
+        input[type="button"] {
+            background-color: #dc3545; /* Color rojo para el botón cancelar */
+        }
+        input[type="submit"]:hover, input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+        input[type="button"]:hover {
+            background-color: #c82333;
+        }
+        /* Elimina el margen derecho del último botón */
+        .button-container input:last-child {
+            margin-right: 0;
+        }
+        /* Mensaje de seguridad de la contraseña */
+        .password-strength {
+            color: red;
+            margin-bottom: 10px;
+        }
+        .password-strong {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <form id="formRegistro" action="" method="POST">
+        <h2>Formulario de Registro</h2>
+
+        <label for="usuario">Usuario:</label>
+        <input type="text" id="usuario" name="usuario" required>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required pattern="[a-zA-Z0-9]{8,20}">
+
+        <label for="confirmPassword">Confirmar Contraseña:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required pattern="[a-zA-Z0-9]{8,20}">
+
+        <!-- Mensaje para la seguridad de la contraseña -->
+        <div class="password-strength" id="passwordStrength">La contraseña no es segura</div>
+
+        <!-- Contenedor para los botones en la misma línea -->
+        <div class="button-container">
+            <input type="submit" id="btnRegistrar" value="Registrar">
+            <input type="button" id="btnCancelar" value="Cancelar">
+        </div>
+    </form>
+
+    <script>
+        var passwordInput = document.getElementById("password");
+        var passwordStrengthText = document.getElementById("passwordStrength");
+
+        // Función para verificar la seguridad de la contraseña
+        function checkPasswordStrength(password) {
+            // Verificar si la contraseña tiene al menos 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales
+            var strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            
+            if (strongPasswordPattern.test(password)) {
+                passwordStrengthText.textContent = "La contraseña es segura";
+                passwordStrengthText.classList.remove("password-weak");
+                passwordStrengthText.classList.add("password-strong");
+            } else {
+                passwordStrengthText.textContent = "La contraseña no es segura";
+                passwordStrengthText.classList.remove("password-strong");
+                passwordStrengthText.classList.add("password-weak");
+            }
+        }
+
+        // Evento cuando el usuario escribe en el campo de la contraseña
+        passwordInput.addEventListener("input", function() {
+            checkPasswordStrength(passwordInput.value);
+        });
+
+        // Validación de formulario antes de enviar
+        document.getElementById("formRegistro").addEventListener("submit", function(event) {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            // Verifica si las contraseñas coinciden
+            if (password !== confirmPassword) {
+                alert("Las contraseñas no coinciden.");
+                event.preventDefault(); // Detiene el envío del formulario
+            }
+
+            // Verifica la seguridad de la contraseña
+            var strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!strongPasswordPattern.test(password)) {
+                alert("La contraseña no es lo suficientemente segura.");
+                event.preventDefault();
+            }
+        });
+
+        // Botón de cancelar para limpiar campos
+        document.getElementById("btnCancelar").addEventListener("click", function() {
+            document.getElementById("formRegistro").reset();
+            passwordStrengthText.textContent = "La contraseña no es segura"; // Reinicia el mensaje de seguridad
+            passwordStrengthText.classList.remove("password-strong");
+        });
+    </script>
+</body>
+</html>
